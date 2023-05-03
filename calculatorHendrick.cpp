@@ -145,11 +145,11 @@ void KeyboardHendrick :: add(KeyHendrick* key){
 CpuHendrick :: CpuHendrick(){
     register01 = new Stack(8);
     register02 = new Stack(8);
-    op = NONE;
+    op = NULL;
 }
 void CpuHendrick :: setCalculator(CalculatorHendrick* calculator){this->calculator = calculator;}
 void CpuHendrick :: receive(Digit digit){
-    if(op == NONE){
+    if(op == NULL){
         if(register01->getTopo() < 7){
             if(digit == ONE){
                 register01->push(1);
@@ -245,26 +245,26 @@ void CpuHendrick :: receive(Digit digit){
 
 void CpuHendrick :: receive(Operator op){
     if(op == SUM){
-        op = SUM;
+        *(this->op) = SUM;
         this->calculator->display->clear();
     }
     else if(op == SUBTRACTION){
-        op = SUBTRACTION;
+        *(this->op) = SUBTRACTION;
         this->calculator->display->clear();
     }
     else if(op == MULTIPLICATION){
-        op = MULTIPLICATION;
+        *(this->op) = MULTIPLICATION;
         this->calculator->display->clear();
     }
     else if(op == DIVISION){
-        op = DIVISION;
+        *(this->op) = DIVISION;
         this->calculator->display->clear();
     }
 }
 
 void CpuHendrick :: receive(Control control){
     if(control == DECIMAL_SEPARATOR){
-        if(op == NONE){
+        if(op == NULL){
             if(register01->getTopo() < 6 && register01->getTopo() > 0){
                 register01->push('.');
                 this->calculator->display->addDecimalSeparator();
@@ -303,21 +303,21 @@ void CpuHendrick :: receive(Control control){
 
         this->calculator->display->clear();
 
-        if(op == SUM){
+        if(*op == SUM){
             float result = decimalNumber01 + decimalNumber02;
 
            // TRANSFORMAR O RESULTADO EM STACK, COLOCAR NO REGISTRADOR 01
 
         }
-        else if(op == SUBTRACTION){
+        else if(*op == SUBTRACTION){
             float result = decimalNumber01 - decimalNumber02;
             // TRANSFORMAR O RESULTADO EM STACK, COLOCAR NO REGISTRADOR 01
         }
-        else if(op == MULTIPLICATION){
+        else if(*op == MULTIPLICATION){
             float result = decimalNumber01 * decimalNumber02;
             // TRANSFORMAR O RESULTADO EM STACK, COLOCAR NO REGISTRADOR 01
         }
-        else if(op == DIVISION){
+        else if(*op == DIVISION){
             float result = decimalNumber01 / decimalNumber02;
             // TRANSFORMAR O RESULTADO EM STACK, COLOCAR NO REGISTRADOR 01
         }

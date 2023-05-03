@@ -28,7 +28,7 @@ class DisplayHendrick : public Display{
 class CpuHendrick : public Cpu{
   Stack* register01;
   Stack* register02;
-  Operator op;
+  Operator* op;
   CalculatorHendrick* calculator; //para saber a calculadora que a cpu esta associada
   public:
     CpuHendrick();
