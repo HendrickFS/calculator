@@ -1,30 +1,48 @@
-#include "calculatorHendrick.hpp"
+#include "calculatorPaulo.hpp"
 
-Stack :: Stack(int tam){
+Stack ::Stack(int tam)
+{
     this->tam = tam;
     vector = new char[tam];
     topo = -1;
 }
 
-void Stack :: push(int valor){
+void Stack ::push(char valor)
+{
     topo++;
     vector[topo] = valor;
 }
 
-char Stack :: pop(){
-    int valor = vector[topo];
+char Stack ::pop()
+{
+    char valor = vector[topo];
     topo--;
     return valor;
 }
 
-int Stack :: getTopo(){return topo;}
+void Stack ::inverte()
+{
+    char *aux = new char[tam];
+    int i = 0;
+    int newTopo = topo;
+    while (topo != -1)
+    {
+        aux[i] = pop();
+        i++;
+    }
+    topo = newTopo;
 
-int Stack :: getTam(){return tam;}
+    vector = aux;
+}
 
-char* Stack :: getVet(){return vector;}
+int Stack ::getTopo() { return topo; }
 
-void Stack :: setTopo(int topo){this->topo = topo;}
+int Stack ::getTam() { return tam; }
 
-void Stack :: setTam(int tam){this->tam = tam;}
+char *Stack ::getVet() { return vector; }
 
-void Stack :: setVet(char* vector){this->vector = vector;}
+void Stack ::setTopo(int topo) { this->topo = topo; }
+
+void Stack ::setTam(int tam) { this->tam = tam; }
+
+void Stack ::setVet(char *vector) { this->vector = vector; }

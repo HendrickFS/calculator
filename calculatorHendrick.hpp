@@ -1,113 +1,130 @@
+#pragma once
 #include "calculator.hpp"
 
-class Stack{
-    int topo;
-    char* vector;
-    int tam;
-    public:
-        Stack(int tam);
-        void push(int valor);
-        char pop();
-        int getTopo();
-        int getTam();
-        char* getVet();
-        void setTopo(int topo);
-        void setTam(int tam);
-        void setVet(char* vector);
+class Stack
+{
+  int topo;
+  char *vector;
+  int tam;
+
+public:
+  Stack(int tam);
+  void push(char valor);
+  char pop();
+  int getTopo();
+  int getTam();
+  char *getVet();
+  void setTopo(int topo);
+  void setTam(int tam);
+  void setVet(char *vector);
+  void inverte();
 };
 
-
-class DisplayHendrick : public Display{
-    public:
-        void add(Digit digit);
-        void addDecimalSeparator();
-        void clear();
+class DisplayHendrick : public Display
+{
+public:
+  void add(Digit digit);
+  void setSignal(Signal);
+  void addDecimalSeparator();
+  void clear();
 };
 
-
-class CpuHendrick : public Cpu{
-  Stack* register01;
-  Stack* register02;
+class CpuHendrick : public Cpu
+{
+  Display *display;
+  Stack *register01;
+  Stack *register02;
   Operator* op;
-  CalculatorHendrick* calculator; //para saber a calculadora que a cpu esta associada
-  public:
-    CpuHendrick();
-    void setCalculator(CalculatorHendrick*); //para associar uma calculadora a cpu
-    void receive(Digit);
-    void receive(Operator);
-    void receive(Control);
+
+public:
+  CpuHendrick();
+  void receive(Digit);
+  void receive(Operator);
+  void receive(Control);
+  void setDisplay(Display *);
 };
 
+#include <vector>
+class KeyboardHendrick : public Keyboard
+{
+  std::vector<Key *> keys;
+  char keysCount = 0;
+  Cpu *cpu;
 
-class KeyboardHendrick : public Keyboard{
-  KeyHendrick* keys[23];
-  CalculatorHendrick* calculator; //para saber a calculadora que o teclado esta associado
-  public:
-    KeyboardHendrick();
-    void setCalculator(CalculatorHendrick*); //para associar uma calculadora ao teclado
-    void receive(Digit);
-    void receive(Operator);
-    void receive(Control);
-    KeyHendrick* getKey(Digit);
-    KeyHendrick* getKey(Operator);
-    KeyHendrick* getKey(Control);
-    void add(KeyHendrick*);
+public:
+  void receive(Digit);
+  void receive(Operator);
+  void receive(Control);
+  Key *getKey(Digit);
+  Key *getKey(Operator);
+  Key *getKey(Control);
+  Key *getKey(Symbol);
+  void add(Key *);
+  void setCpu(Cpu *);
 };
 
-
-class KeyHendrick : public Key{
-  char const* symbol;
-  KeyboardHendrick* keyboard;
-  public:
-    KeyHendrick(char const* symbol);
-    void press();
-    char const* getSymbol();
-    void setKeyboard(KeyboardHendrick*);
-};
-
-
-class KeyDigitHendrick: public KeyDigit{
+class KeyDigitHendrick : public KeyDigit
+{
+  Symbol symbol;
   Digit digit;
-  public:
-    KeyDigitHendrick(Digit digit);
-    Digit getDigit();
+  Keyboard *keyboard;
+
+public:
+  KeyDigitHendrick(Symbol, Digit);
+  void press();
+  Symbol getSymbol();
+  void setKeyboard(Keyboard *);
+  Digit getDigit();
 };
 
-
-class KeyOperatorHendrick: public KeyOperator{
-  Operator op;
-  public:
-    KeyOperatorHendrick(Operator op);
-    Operator getOperator();
-};
-
-
-class KeyControlHendrick: public KeyControl{
+class KeyControlHendrick : public KeyControl
+{
+  Symbol symbol;
   Control control;
-  public:
-    KeyControlHendrick(Control control);
-    Control getControl();
+  Keyboard *keyboard;
+
+public:
+  KeyControlHendrick(Symbol, Control);
+  void press();
+  Symbol getSymbol();
+  void setKeyboard(Keyboard *);
+  Control getControl();
 };
 
+class KeyOperatorHendrick : public KeyOperator
+{
+  Symbol symbol;
+  Operator operator_;
+  Keyboard *keyboard;
 
-class CalculatorHendrick : public Calculator{
-    public:
-        DisplayHendrick* display;
-        CpuHendrick* cpu;
-        KeyboardHendrick* keyboard;
-        CalculatorHendrick();
-        void setDisplay(DisplayHendrick*);
-        DisplayHendrick* getDisplay();
-        void setCpu(CpuHendrick*);
-        CpuHendrick* getCpu();
-        void setKeyboard(KeyboardHendrick*);
-        KeyboardHendrick* getKeyboard();
+public:
+  KeyOperatorHendrick(Symbol, Operator);
+  void press();
+  Symbol getSymbol();
+  void setKeyboard(Keyboard *);
+  Operator getOperator();
 };
 
+class CalculatorHendrick : public Calculator
+{
+  Display *display;
+  Cpu *cpu;
+  Keyboard *keyboard;
 
-class CalculatorErrorHendrick : public CalculatorError{
-  char const* message;
-  public:
-    CalculatorErrorHendrick(char const* message);
-    char const* getMessage();
+public:
+  void setDisplay(Display *);
+  Display *getDisplay();
+  void setCpu(Cpu *);
+  Cpu *getCpu();
+  void setKeyboard(Keyboard *);
+  Keyboard *getKeyboard();
+};
+
+class CalculatorErrorHendrick : public CalculatorError
+{
+  char const *message;
+
+public:
+  CalculatorErrorHendrick(char const *message);
+  char const *getMessage();
 };
