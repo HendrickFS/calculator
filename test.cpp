@@ -5,14 +5,17 @@
 
 /** Implementação das classes de teste
 ---------------------------------------------*/
-TestCalculatorBase::TestCalculatorBase(Calculator *calculator) {
+TestCalculatorBase::TestCalculatorBase(Calculator *calculator)
+{
   this->calculator = calculator;
 }
-void TestCalculatorBase::setup() {
+void TestCalculatorBase::setup()
+{
   std::cout << "Iniciando teste..." << this->getName() << std::endl;
   calculator->getKeyboard()->getKey(ON_CLEAR_ERROR)->press();
 }
-void TestCalculatorBase::tearDown() {
+void TestCalculatorBase::tearDown()
+{
   calculator->getKeyboard()->getKey(OFF)->press();
   std::cout << "Teste finalizado..." << std::endl;
 }
@@ -20,66 +23,74 @@ void TestCalculatorBase::tearDown() {
 /**
   123 + 456 = = = = 1947
 */
-TestCalculator1::TestCalculator1(Calculator *calculator)
-    : TestCalculatorBase(calculator) {}
-void TestCalculator1::setup() {
-  this->TestCalculatorBase::setup();
-  calculator->getKeyboard()->getKey("0")->press();
-}
+// TestCalculator1::TestCalculator1(Calculator *calculator)
+//     : TestCalculatorBase(calculator) {}
+// void TestCalculator1::setup()
+// {
+//   this->TestCalculatorBase::setup();
+//   calculator->getKeyboard()->getKey("0")->press();
+// }
 
-void TestCalculator1::run() {
-  Symbol test[] = {"1", "2", "3", "+", "4", "5", "6", "=", "=", "=", "="};
-  for (Symbol s : test)
-    calculator->getKeyboard()->getKey(s)->press();
-}
-char const *TestCalculator1::getName() {
-  return " Testando 123 + 456 = = = = 1947";
-}
+// void TestCalculator1::run()
+// {
+//   Symbol test[] = {"1", "2", "3", "+", "4", "5", "6", "=", "=", "=", "="};
+//   for (Symbol s : test)
+//     calculator->getKeyboard()->getKey(s)->press();
+// }
+// char const *TestCalculator1::getName()
+// {
+//   return " Testando 123 + 456 = = = = 1947";
+// }
 
 /**
   .1 * .1 = 0.01
 */
-TestCalculator2::TestCalculator2(Calculator *calculator)
-    : TestCalculatorBase(calculator) {}
+// TestCalculator2::TestCalculator2(Calculator *calculator)
+//     : TestCalculatorBase(calculator) {}
 
-void TestCalculator2::run() {
-  calculator->getKeyboard()->getKey(DECIMAL_SEPARATOR)->press();
-  calculator->getKeyboard()->getKey(ONE)->press();
-  calculator->getKeyboard()->getKey(SUM)->press();
-  calculator->getKeyboard()->getKey(DECIMAL_SEPARATOR)->press();
-  calculator->getKeyboard()->getKey(ONE)->press();
-  calculator->getKeyboard()->getKey(EQUAL)->press();
-}
+// void TestCalculator2::run()
+// {
+//   calculator->getKeyboard()->getKey(DECIMAL_SEPARATOR)->press();
+//   calculator->getKeyboard()->getKey(ONE)->press();
+//   calculator->getKeyboard()->getKey(SUM)->press();
+//   calculator->getKeyboard()->getKey(DECIMAL_SEPARATOR)->press();
+//   calculator->getKeyboard()->getKey(ONE)->press();
+//   calculator->getKeyboard()->getKey(EQUAL)->press();
+// }
 
-char const *TestCalculator2::getName() {
-  return " Testando 123 + 456 = = = = 1947";
-}
+// char const *TestCalculator2::getName()
+// {
+//   return " Testando 123 + 456 = = = = 1947";
+// }
 
-TestCalculatorSmart::TestCalculatorSmart(Calculator *calculator,
-                                         char const *tests[])
-    : TestCalculatorBase(calculator) {
-  this->tests = tests;
-}
-void TestCalculatorSmart::run() {
-  Symbol test[] = {"1", "2", "3", "+", "4", "5", "6", "=", "=", "=", "="};
-  for (Symbol s : test)
-    calculator->getKeyboard()->getKey(s)->press();
-}
-char const *TestCalculatorSmart::getName() {
-  return " Testando 123 + 456 = = = = 1947";
-}
+// TestCalculatorSmart::TestCalculatorSmart(Calculator *calculator,
+//                                          char const *tests[])
+//     : TestCalculatorBase(calculator) {
+//   this->tests = tests;
+// }
+// void TestCalculatorSmart::run() {
+//   Symbol test[] = {"1", "2", "3", "+", "4", "5", "6", "=", "=", "=", "="};
+//   for (Symbol s : test)
+//     calculator->getKeyboard()->getKey(s)->press();
+// }
+// char const *TestCalculatorSmart::getName() {
+//   return " Testando 123 + 456 = = = = 1947";
+// }
 
 /** Implementação das funções de teste
 ---------------------------------------------*/
 /**
   123 + 456 = = = = 1947
 */
-void test1(Calculator *calculator) {
+void test1(Calculator *calculator)
+{
   calculator->getKeyboard()->getKey(ONE)->press();
   calculator->getKeyboard()->getKey(TWO)->press();
+  calculator->getKeyboard()->getKey(DECIMAL_SEPARATOR)->press();
   calculator->getKeyboard()->getKey(THREE)->press();
-  calculator->getKeyboard()->getKey(SUM)->press();
+  calculator->getKeyboard()->getKey(DIVISION)->press();
   calculator->getKeyboard()->getKey(FOUR)->press();
+  calculator->getKeyboard()->getKey(DECIMAL_SEPARATOR)->press();
   calculator->getKeyboard()->getKey(FIVE)->press();
   calculator->getKeyboard()->getKey(SIX)->press();
   calculator->getKeyboard()->getKey(EQUAL)->press();
@@ -91,21 +102,13 @@ void test1(Calculator *calculator) {
 /**
   .1 * .1 = 0.01
 */
-void test2(Calculator *calculator) {
+void test2(Calculator *calculator)
+{
   calculator->getKeyboard()->getKey(DECIMAL_SEPARATOR)->press();
+  calculator->getKeyboard()->getKey(ZERO)->press();
   calculator->getKeyboard()->getKey(ONE)->press();
-  calculator->getKeyboard()->getKey(SUM)->press();
-  calculator->getKeyboard()->getKey(DECIMAL_SEPARATOR)->press();
   calculator->getKeyboard()->getKey(ONE)->press();
-  calculator->getKeyboard()->getKey(EQUAL)->press();
-}
-/**
-  .1 * .1 = 0.01
-*/
-void test3(Calculator *calculator) {
-  calculator->getKeyboard()->getKey(DECIMAL_SEPARATOR)->press();
-  calculator->getKeyboard()->getKey(ONE)->press();
-  calculator->getKeyboard()->getKey(SUM)->press();
+  calculator->getKeyboard()->getKey(MULTIPLICATION)->press();
   calculator->getKeyboard()->getKey(DECIMAL_SEPARATOR)->press();
   calculator->getKeyboard()->getKey(ONE)->press();
   calculator->getKeyboard()->getKey(EQUAL)->press();
@@ -113,18 +116,38 @@ void test3(Calculator *calculator) {
 /**
   .1 * .1 = 0.01
 */
-void test4(Calculator *calculator) {
-  calculator->getKeyboard()->getKey(DECIMAL_SEPARATOR)->press();
-  calculator->getKeyboard()->getKey(ONE)->press();
-  calculator->getKeyboard()->getKey(SUM)->press();
-  calculator->getKeyboard()->getKey(DECIMAL_SEPARATOR)->press();
-  calculator->getKeyboard()->getKey(ONE)->press();
+void test3(Calculator *calculator)
+{
+  calculator->getKeyboard()->getKey(FIVE)->press();
+  calculator->getKeyboard()->getKey(ZERO)->press();
+  calculator->getKeyboard()->getKey(SQUARE_ROOT)->press();
+  calculator->getKeyboard()->getKey(PERCENTAGE)->press();
+  calculator->getKeyboard()->getKey(FIVE)->press();
+  calculator->getKeyboard()->getKey(ZERO)->press();
   calculator->getKeyboard()->getKey(EQUAL)->press();
+}
+/**
+  .1 * .1 = 0.01
+*/
+void test4(Calculator *calculator)
+{
+  calculator->getKeyboard()->getKey(ONE)->press();
+  calculator->getKeyboard()->getKey(ZERO)->press();
+  calculator->getKeyboard()->getKey(MEMORY_SUM)->press();
+  calculator->getKeyboard()->getKey(MEMORY_SUM)->press();
+  calculator->getKeyboard()->getKey(MEMORY_READ_CLEAR)->press();
+  calculator->getKeyboard()->getKey(MEMORY_READ_CLEAR)->press();
 }
 
 /* Inclua suas implementações aqui */
 #include "calculatorPaulo.hpp"
-Calculator *buildCalculator() {
+#include "displayPaulo.hpp"
+#include "cpuPaulo.hpp"
+#include "keyboardPaulo.hpp"
+#include "keyPaulo.hpp"
+
+Calculator *buildCalculator()
+{
   /* Build da calculadora */
   Calculator *calculator = new CalculatorPaulo();
   Display *display = new DisplayPaulo();
@@ -199,27 +222,33 @@ Calculator *buildCalculator() {
   return calculator;
 }
 
-void mainTest() {
+void mainTest()
+{
 
-  try {
+  // try
+  // {
     std::cout << "Construindo a calculadora..." << std::endl;
     Calculator *calculator = buildCalculator();
-    /** Execução dos testes Orientados a Objetos
-    ---------------------------------------------*/
+  //   /** Execução dos testes Orientados a Objetos
+  //   ---------------------------------------------*/
 
-    std::vector<Test *> calculatorTests;
-    calculatorTests.push_back(new TestCalculator1(calculator));
-    calculatorTests.push_back(new TestCalculator2(calculator));
+  //   std::vector<Test *> calculatorTests;
+  //   calculatorTests.push_back(new TestCalculator1(calculator));
+  //   calculatorTests.push_back(new TestCalculator2(calculator));
 
-    for (Test *test : calculatorTests) {
-      try {
-        test->setup();
-        test->run();
-        test->tearDown();
-      } catch (CalculatorError &e) {
-        std::cout << "Algum erro aconteceu: " << e.getMessage();
-      }
-    }
+  //   for (Test *test : calculatorTests)
+  //   {
+  //     try
+  //     {
+  //       test->setup();
+  //       test->run();
+  //       test->tearDown();
+  //     }
+  //     catch (CalculatorError &e)
+  //     {
+  //       std::cout << "Algum erro aconteceu: " << e.getMessage();
+  //     }
+  //   }
 
     /** Execução dos testes estruturados
     ---------------------------------------------*/
@@ -238,21 +267,33 @@ void mainTest() {
 
     /** Execução dos testes estruturados mais organizados
     ---------------------------------------------*/
-    std::function<void(Calculator *)> calculatorTests_[] = {&test1, &test2,
-                                                            &test3, &test4};
-    try {
-      int i = 0;
-      for (std::function<void(Calculator *)> test : calculatorTests_) {
-        std::cout << "Iniciando teste..." << i++ << std::endl;
-        calculator->getKeyboard()->getKey(ON_CLEAR_ERROR)->press();
-        test(calculator);
-      }
-    } catch (CalculatorError &e) {
-      std::cout << "Algum erro aconteceu: " << e.getMessage();
-    }
+//     std::function<void(Calculator *)> calculatorTests_[] = {&test1, &test2,
+//                                                             &test3, &test4};
+//     try
+//     {
+//       int i = 0;
+//       for (std::function<void(Calculator *)> test : calculatorTests_)
+//       {
+//         std::cout << "Iniciando teste..." << i++ << std::endl;
+//         calculator->getKeyboard()->getKey(ON_CLEAR_ERROR)->press();
+//         test(calculator);
+//       }
+//     }
+//     catch (CalculatorError &e)
+//     {
+//       std::cout << "Algum erro aconteceu: " << e.getMessage();
+//     }
 
-    delete calculator;
-  } catch (CalculatorError *error) {
-    std::cout << "Tests failed: " << error->getMessage();
-  }
+//     delete calculator;
+//   }
+//   catch (CalculatorError *error)
+//   {
+//     std::cout << "Tests failed: " << error->getMessage();
+//   }
+}
+
+int main()
+{
+  mainTest();
+  return 0;
 }

@@ -26,28 +26,28 @@ class TestCalculatorBase: public Test{
 };
 
 
-class TestCalculator1: public TestCalculatorBase{
-  public:
-    TestCalculator1(Calculator*);
-    void setup();
-    void run();
-    char const * getName();
-};
+// class TestCalculator1: public TestCalculatorBase{
+//   public:
+//     TestCalculator1(Calculator*);
+//     void setup();
+//     void run();
+//     char const * getName();
+// };
 
-class TestCalculator2: public TestCalculatorBase{
-  public:
-    TestCalculator2(Calculator*);
-    void run();
-    char const * getName();
-};
+// class TestCalculator2: public TestCalculatorBase{
+//   public:
+//     TestCalculator2(Calculator*);
+//     void run();
+//     char const * getName();
+// };
 
-class TestCalculatorSmart: public TestCalculatorBase{
-    std::vector<Symbol []>;
-  public:
-    TestCalculator2(Calculator*, Symbol *tests, int testsCount);
-    void run();
-    char const * getName();
-};
+// class TestCalculatorSmart: public TestCalculatorBase{
+//     std::vector<Symbol> tests;
+//   public:
+//     TestCalculatorSmart(Calculator*, Symbol *tests, int testsCount);
+//     void run();
+//     char const * getName();
+// };
 
 
 /** Definição de testes estruturados 
